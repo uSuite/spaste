@@ -154,6 +154,9 @@ struct SettingsView: View {
                             model.refresh()
                         }
                     }
+                    Text("After an update, System Settings can show sPaste switched on while macOS still holds the old version's entry. Quit sPaste, run tccutil reset Accessibility io.github.usuite.spaste in Terminal, then reopen it and allow it again.")
+                        .foregroundStyle(.secondary)
+                        .textSelection(.enabled)
                 }
                 Toggle(
                     "Launch at login",

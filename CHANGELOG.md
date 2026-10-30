@@ -2,6 +2,10 @@
 
 Versions follow semver. Each release lists what a user notices; docs/DECISIONS.md has the reasoning.
 
+## Unreleased
+
+- When paste on Enter lacks Accessibility, Settings says how to grant it again after an update: quit sPaste, `tccutil reset Accessibility io.github.usuite.spaste`, reopen and allow it. Switching it off and on, or removing and adding it in System Settings, did not always replace the old entry.
+
 ## 0.1.1 (2026-10-30)
 
 - The search and command line fills the width of the panel and scrolls a long query instead of wrapping it out of sight; it showed about four characters before.

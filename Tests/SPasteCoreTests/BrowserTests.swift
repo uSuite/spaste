@@ -165,6 +165,16 @@ struct BrowserTests {
         #expect(b.mode == .normal)
     }
 
+    @Test func selectClamps() {
+        var b = browser()
+        b.select(3)
+        #expect(b.selected?.id == "3")
+        b.select(99)
+        #expect(b.selected?.id == "4")
+        b.select(-1)
+        #expect(b.selected?.id == "0")
+    }
+
     @Test func replaceKeepsTheSelectedItem() {
         var b = browser()
         run(&b, .down, count: 2)

@@ -238,7 +238,8 @@ public struct Browser: Sendable {
         select(selection + offset)
     }
 
-    private mutating func select(_ index: Int) {
+    /// Moves the selection to a row, clamped; a mouse click lands here.
+    public mutating func select(_ index: Int) {
         selection = max(0, min(index, visible.count - 1))
     }
 

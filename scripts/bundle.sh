@@ -7,10 +7,12 @@ SWIFT=${SWIFT:-swift}
 VERSION=${VERSION:-0.0.0}
 BUILD_NUMBER=${BUILD_NUMBER:-1}
 CONFIG=${CONFIG:-debug}
-APP=build/sPaste.app
+APP=${APP:-build/sPaste.app}
+# extra build flags, such as the two --arch flags of a universal release
+FLAGS=${FLAGS:-}
 
-sh -c "$SWIFT build -c $CONFIG --product sPaste"
-BIN_DIR=$(sh -c "$SWIFT build -c $CONFIG --show-bin-path")
+sh -c "$SWIFT build -c $CONFIG $FLAGS --product sPaste"
+BIN_DIR=$(sh -c "$SWIFT build -c $CONFIG $FLAGS --show-bin-path")
 
 rm -rf "$APP"
 mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"

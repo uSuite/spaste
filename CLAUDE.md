@@ -8,6 +8,7 @@ macOS-native, keyboard-first clipboard history (Maccy spirit, vim keys, filters 
 - `make test`   scommon's tests when `../scommon` is checked out, then swift test on SPasteCore
 - `make app`    build sPaste.app into build/
 - `make run`    build and launch it
+- `make icon`   Resources/AppIcon.icns and brand/spaste-1024.png from the brand SVGs
 - `make smoke`  drive the panel against a seeded throwaway history (SPASTE_SMOKE), check 16 states, renders in build/smoke/; the panel never takes key status there
 
 ## Layers

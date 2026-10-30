@@ -1,5 +1,7 @@
 # sPaste
 
+<img src="brand/spaste-1024.png" alt="sPaste icon" width="128">
+
 A keyboard-first clipboard history for macOS, in the spirit of Ditto on Windows, Maccy on macOS and Parcellite on Linux, with vim keys and filters by type and time.
 
 ## Why another clipboard manager

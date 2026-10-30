@@ -21,6 +21,7 @@ sed \
     -e "s/\$(MARKETING_VERSION)/$VERSION/" \
     -e "s/\$(CURRENT_PROJECT_VERSION)/$BUILD_NUMBER/" \
     Resources/Info.plist > "$APP/Contents/Info.plist"
+cp Resources/AppIcon.icns "$APP/Contents/Resources/AppIcon.icns"
 printf 'APPL????' > "$APP/Contents/PkgInfo"
 codesign --force --sign - "$APP" >/dev/null
 echo "built $APP $VERSION ($BUILD_NUMBER)"

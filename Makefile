@@ -16,7 +16,7 @@ TEST_FLAGS := -Xswiftc -plugin-path -Xswiftc $(CLT)/usr/lib/swift/host/plugins/t
 endif
 XCODEGEN := $(shell command -v xcodegen 2>/dev/null)
 
-.PHONY: gen build test test-common app run smoke clean version
+.PHONY: gen build test test-common app run smoke icon clean version
 
 gen:
 	@test -n "$(XCODEGEN)" || { echo "xcodegen missing: brew install xcodegen"; exit 1; }
@@ -41,6 +41,12 @@ app:
 run: app
 	-pkill -x sPaste
 	open -n build/sPaste.app
+
+# The app icon and the README image from the brand SVGs.
+icon:
+	mkdir -p build
+	xcrun swift scripts/make-icon.swift build/AppIcon.iconset brand/spaste-1024.png
+	iconutil -c icns build/AppIcon.iconset -o Resources/AppIcon.icns
 
 smoke: app
 	scripts/smoke.sh

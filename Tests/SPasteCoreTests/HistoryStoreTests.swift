@@ -131,6 +131,15 @@ struct HistoryStoreTests {
         #expect(reloaded.items.isEmpty)
     }
 
+    @Test func imageURLOnlyForImages() throws {
+        let folder = try TempFolder()
+        let store = try store(folder)
+        let image = try store.add(.image(Data([1]), type: .tiff), app: nil, at: Clock.now)
+        let text = try store.add(.text("a", rtf: nil), app: nil, at: Clock.now)
+        #expect(store.imageURL(of: image)?.lastPathComponent == "2026-10-30-100000-001.tiff")
+        #expect(store.imageURL(of: text) == nil)
+    }
+
     @Test func digestSeparatesKinds() {
         #expect(HistoryStore.digest(.text("a", rtf: nil)) == HistoryStore.digest(.text("a", rtf: Data("r".utf8))))
         #expect(HistoryStore.digest(.text("a", rtf: nil)) != HistoryStore.digest(.files(["a"])))

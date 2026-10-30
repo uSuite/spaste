@@ -160,6 +160,16 @@ public final class HistoryStore {
         return try read(item.id, kind: item.kind, exts: exts)
     }
 
+    /// The image file of an image item, for thumbnails.
+    public func imageURL(of item: ClipItem) -> URL? {
+        guard item.kind == .image,
+            let ext = extensions[item.id]?.first(where: { ImageType(rawValue: $0) != nil })
+        else {
+            return nil
+        }
+        return url(item.id, ext)
+    }
+
     /// Deletes the item's files.
     public func delete(_ id: String) throws {
         guard let position = items.firstIndex(where: { $0.id == id }) else {

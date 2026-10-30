@@ -18,6 +18,10 @@ Swift 6.2, macOS 26, AppKit, Carbon for the hotkey, CryptoKit for content digest
   - `PanelController`: the `NSPanel`, its rows and status line, key events into `KeyMatcher` and `Browser`.
   - `AppDelegate`: status item menu, config loading, launch at login with `SMAppService`, `Paster` for the opt-in Cmd+V.
 
+## Smoke
+
+`SPASTE_SMOKE=<steps>` runs a script of panel steps (`open`, `keys`, `type`, `enter`, `esc`, `state`, `shot`) with capture paused, no hotkey and the history in `SPASTE_HISTORY_DIR`, then quits; `scripts/smoke.sh` seeds that history and compares the `state` lines. The panel cannot become key during a smoke run: a non-activating panel that can is the key window system-wide, and keys typed in other apps would land in it.
+
 ## Measured in the PoC (2026-10-30, macOS 27.0.1, Apple Silicon)
 
 - A pasteboard read of text, a file or a 1024 px PNG took 0 to 3 ms, with no privacy prompt for an ad hoc signed bundle launched on its own.

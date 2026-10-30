@@ -47,6 +47,7 @@ state
 keys ?
 type invoice
 state
+fits type:text since:2h invoice 42
 shot 02-search
 esc
 state
@@ -96,6 +97,7 @@ normal | invoice.pdf | 5/5 |  |
 normal | Invoice 7 | 5/5 |  |
 normal | invoice.pdf | 5/5 |  |
 ?invoice | Invoice 7 | 5/5 |  |
+fits yes
 normal | invoice.pdf | 5/5 |  |
 normal | image | 1/5 | image |
 normal | deploy script | 3/5 | since 1h |

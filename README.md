@@ -30,7 +30,11 @@ The release is signed ad hoc, not with a paid Apple Developer ID, so Apple has n
 
 From then on that copy opens like any app; each new version you download asks once more. A copy you build yourself never carries the download flag.
 
-If you turn on paste on Enter, macOS asks to add sPaste under Privacy & Security > Accessibility. A new version is a new signature to macOS, so after an update switch sPaste off and on there; Settings tells you when it is needed.
+If you turn on paste on Enter, macOS asks to add sPaste under Privacy & Security > Accessibility. A new version is a new signature to macOS, so after an update the old entry can stay in place: System Settings shows sPaste switched on, but pasting does not work. Switching it off and on, or removing and adding it again, does not always replace that entry. Quit sPaste, run this in Terminal, then reopen sPaste and allow it again; Settings tells you when it is needed.
+
+```
+tccutil reset Accessibility io.github.usuite.spaste
+```
 
 ## Use
 

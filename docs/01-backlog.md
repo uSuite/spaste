@@ -36,5 +36,5 @@ sPaste ("super-fast paste") is a clipboard history in a panel on a hotkey, drive
 - SP-401 (P1) Search image text with Vision OCR.
 - SP-402 (P1) Paste as plain text.
 - SP-403 (P2) Edit a text item before pasting.
-- SP-404 (P2) Smoke script and benchmark targets as in sView.
+- SP-404 (P2) A `make bench` target as in sView (open time, idle CPU); `make smoke` exists.
 - SP-405 (P3) Several pasteboards, sync between Macs.

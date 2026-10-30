@@ -16,7 +16,7 @@ TEST_FLAGS := -Xswiftc -plugin-path -Xswiftc $(CLT)/usr/lib/swift/host/plugins/t
 endif
 XCODEGEN := $(shell command -v xcodegen 2>/dev/null)
 
-.PHONY: gen build test test-common app run clean version
+.PHONY: gen build test test-common app run smoke clean version
 
 gen:
 	@test -n "$(XCODEGEN)" || { echo "xcodegen missing: brew install xcodegen"; exit 1; }
@@ -41,6 +41,9 @@ app:
 run: app
 	-pkill -x sPaste
 	open -n build/sPaste.app
+
+smoke: app
+	scripts/smoke.sh
 
 clean:
 	rm -rf .build build

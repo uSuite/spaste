@@ -33,3 +33,7 @@ Why: password managers mark secrets. Items carrying `org.nspasteboard.ConcealedT
 ## 2026-10-30 Settings window over the config file
 
 Why: Sam asked for friendly settings and config export like sView and sNotate. The file stays the truth: each control writes its line through `ConfigPaths.persist`, the repeating keys (`ignore_app`, `ignore_type`) are rewritten as a block in the place of their first line, and the app reloads at once. Export and import use scommon's `ConfigArchive` with config and keymap only; the history is data and never travels with the config. Rules out: UserDefaults, a second settings store, editing keys in the window (they stay in `keymap`).
+
+## 2026-10-30 Brand: grape, a clipboard around the s
+
+Why: Sam asked for a purple that reads calm and trustworthy. Violet is sWalk's (`#8b5cf6` to `#6d28d9`), so sPaste takes grape, `#9b59b6` to `#6c3483`, a muted red-violet that stays apart from sWalk and sView in the Dock. The accent is a thin white clipboard frame with its clip, of the weight of sView's brackets, around the shared `s`. The menu bar keeps the white-stroke `list.clipboard` symbol, which Sam likes and which takes the menu bar tint as a template image. Rules out: sWalk's violet, a second glyph, a coloured menu bar icon.

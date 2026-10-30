@@ -2,6 +2,10 @@
 
 Versions follow semver. Each release lists what a user notices; docs/DECISIONS.md has the reasoning.
 
+## Unreleased
+
+- The search and command line fills the width of the panel and scrolls a long query instead of wrapping it out of sight; it showed about four characters before.
+
 ## 0.1.0 (2026-10-30)
 
 - Clipboard history in a panel on Shift+Cmd+C: text with its formatting, images and file lists, newest first, with a thumbnail and an age per row.

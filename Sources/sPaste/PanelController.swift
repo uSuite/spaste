@@ -158,6 +158,9 @@ final class PanelController: NSObject, NSTableViewDataSource, NSTableViewDelegat
         input.isBordered = false
         input.drawsBackground = false
         input.focusRingType = .none
+        input.usesSingleLineMode = true
+        input.cell?.wraps = false
+        input.cell?.isScrollable = true
         input.delegate = self
         status.font = .systemFont(ofSize: 11)
         status.textColor = .secondaryLabelColor
@@ -173,6 +176,10 @@ final class PanelController: NSObject, NSTableViewDataSource, NSTableViewDelegat
             background.addSubview(view)
         }
         status.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        // The input takes the row between the prompt and the pending keys.
+        prompt.setContentHuggingPriority(.required, for: .horizontal)
+        pending.setContentHuggingPriority(.required, for: .horizontal)
+        input.setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
         NSLayoutConstraint.activate([
             scroll.topAnchor.constraint(equalTo: background.topAnchor, constant: 28),
             scroll.leadingAnchor.constraint(equalTo: background.leadingAnchor),
@@ -508,7 +515,8 @@ final class PanelController: NSObject, NSTableViewDataSource, NSTableViewDelegat
 /// `SPASTE_SMOKE=<script>`: drives the panel without a keyboard and records
 /// what it shows, for scripts/smoke.sh. One step per line: `open`,
 /// `keys <sequence>`, `type <text>`, `enter`, `esc`, `state`, `shot <name>`,
-/// and `window <title> <name>` to render another window of the app.
+/// `fits <text>` to check the input line shows that much, and
+/// `window <title> <name>` to render another window of the app.
 extension PanelController {
     func runSmoke(
         _ steps: [String],
@@ -540,6 +548,10 @@ extension PanelController {
             append(smokeState(), to: output.appendingPathComponent("state.txt"))
         case "shot":
             shot(panel.contentView, to: output.appendingPathComponent("\(rest).png"))
+        case "fits":
+            let width = (rest as NSString).size(withAttributes: [.font: input.font as Any]).width
+            let fits = width <= input.bounds.width
+            append("fits \(fits ? "yes" : "no")", to: output.appendingPathComponent("state.txt"))
         case "window":
             let parts = rest.split(separator: " ", maxSplits: 1).map(String.init)
             let window = NSApp.windows.first { $0.title.hasSuffix(parts.first ?? "") && $0.isVisible }

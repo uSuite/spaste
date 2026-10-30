@@ -30,7 +30,7 @@ final class TempFolder {
 enum Clock {
     static let calendar: Calendar = {
         var calendar = Calendar(identifier: .gregorian)
-        calendar.timeZone = TimeZone(identifier: "Asia/Kuala_Lumpur")!
+        calendar.timeZone = TimeZone(identifier: "UTC")!
         return calendar
     }()
 

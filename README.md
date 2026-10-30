@@ -17,6 +17,21 @@ The history is a plain folder: one file per item and a text index, so pruning or
 
 sPaste is a utility of the [uSuite](https://github.com/uSuite) organization, built to the same rules as the sSuite tools: one job, plain text config, keyboard first, Swift and Apple frameworks only, nothing uploaded. It shares the keymap grammar and config code of [scommon](https://github.com/uSuite/scommon).
 
+## Install
+
+Requires macOS 26 or newer, on Apple silicon or Intel. Download `sPaste-<version>.zip` from the [latest release](https://github.com/uSuite/spaste/releases/latest), open it, and move `sPaste.app` to Applications. sPaste lives in the menu bar; choose Launch at Login in its menu or Settings to keep it running.
+
+### The first open: sPaste Not Opened
+
+The release is signed ad hoc, not with a paid Apple Developer ID, so Apple has not notarised it. The first time you open a downloaded copy, macOS stops it with "Apple could not verify sPaste is free of malware". Choose Done, then allow it once, either way:
+
+- System Settings > Privacy & Security, scroll down to Security, and next to the line saying sPaste was blocked to protect your Mac, choose Open Anyway, confirm with your password or Touch ID, then Open.
+- Or in Terminal, remove the download flag macOS checks: `xattr -dr com.apple.quarantine /Applications/sPaste.app`
+
+From then on that copy opens like any app; each new version you download asks once more. A copy you build yourself never carries the download flag.
+
+If you turn on paste on Enter, macOS asks to add sPaste under Privacy & Security > Accessibility. A new version is a new signature to macOS, so after an update switch sPaste off and on there; Settings tells you when it is needed.
+
 ## Use
 
 Shift+Cmd+C opens and closes the panel (`hotkey` in the config). Enter copies the selected item back to the clipboard and closes the panel; press Cmd+V where you want it. `paste_on_enter yes` pastes for you, which needs Accessibility access. The full key list is in `docs/keys.md`.

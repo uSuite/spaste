@@ -1,0 +1,40 @@
+name: sPaste
+options:
+  bundleIdPrefix: io.github.usuite
+  deploymentTarget:
+    macOS: "26.0"
+  createIntermediateGroups: true
+packages:
+  sPaste:
+    path: .
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    MARKETING_VERSION: "0.1.0"
+    CURRENT_PROJECT_VERSION: "1"
+targets:
+  sPaste:
+    type: application
+    platform: macOS
+    sources:
+      - path: Sources/sPaste
+      - path: Resources/AppIcon.icns
+        buildPhase: resources
+    dependencies:
+      - package: sPaste
+        product: SPasteCore
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: io.github.usuite.spaste
+        PRODUCT_NAME: sPaste
+        INFOPLIST_FILE: Resources/Info.plist
+        SWIFT_VERSION: "5.0"
+        SWIFT_STRICT_CONCURRENCY: minimal
+        CODE_SIGN_IDENTITY: "-"
+        CODE_SIGN_STYLE: Manual
+        ENABLE_HARDENED_RUNTIME: NO
+schemes:
+  sPaste:
+    build:
+      targets:
+        sPaste: all

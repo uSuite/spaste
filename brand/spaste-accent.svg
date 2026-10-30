@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <!-- sPaste: a clipboard around the s, a thin frame of the weight of
+       sView's brackets with its clip on top; the hole in the clip takes the
+       background's colour at that height. -->
+  <rect x="226" y="176" width="572" height="700" rx="64" fill="none" stroke="#ffffff" stroke-width="26"/>
+  <rect x="402" y="128" width="220" height="96" rx="34" fill="#ffffff"/>
+  <circle cx="512" cy="164" r="20" fill="#9758b3"/>
+</svg>

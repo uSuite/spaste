@@ -144,6 +144,8 @@ struct BrowserTests {
         #expect(run(&b, .wipe(confirmed: true)) == [.wipe])
         #expect(run(&b, .pause) == [.togglePause])
         #expect(run(&b, .close) == [.close])
+        #expect(run(&b, .settings) == [.close, .openSettings])
+        #expect(run(&b, .export("x.zip")) == [.export("x.zip")])
     }
 
     @Test func commandLineRunsCommands() {

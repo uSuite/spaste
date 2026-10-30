@@ -7,6 +7,7 @@ private let log = Logger(subsystem: "io.github.usuite.spaste", category: "app")
 
 /// The menu bar agent: loads config and history, runs the watcher and the
 /// hotkey, and carries out what the panel decides.
+@MainActor
 final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private let environment = ProcessInfo.processInfo.environment
     private let paths = ConfigPaths(app: "spaste")
@@ -22,6 +23,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private var watcher: PasteboardWatcher!
     private var panel: PanelController!
     private var hotKey: HotKey!
+    private var settings: SettingsWindowController?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         do {
@@ -95,7 +97,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         problems += overlaid.issues.map { "keymap \($0)" }
         watcher.config = config
         watcher.start()
-        if !hotKey.register(config.hotkey) {
+        if environment["SPASTE_SMOKE"] == nil, !hotKey.register(config.hotkey) {
             problems.append("hotkey \(config.hotkey) could not be registered")
         }
     }
@@ -143,6 +145,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
                     try store.wipe()
                 case .togglePause:
                     togglePause()
+                case .openSettings:
+                    openSettings()
+                case .export(let path):
+                    export(to: path)
                 }
             } catch {
                 panel.say("\(error)")
@@ -178,6 +184,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         menu.addItem(item("Pause Capture", #selector(pauseFromMenu), on: watcher.paused))
         menu.addItem(item("Ignore Next Copy", #selector(ignoreNext), on: watcher.ignoreNext))
         menu.addItem(.separator())
+        menu.addItem(item("Settings…", #selector(openSettings)))
         menu.addItem(item("Launch at Login", #selector(toggleLogin), on: SMAppService.mainApp.status == .enabled))
         menu.addItem(item("Open Config Folder", #selector(openConfig)))
         menu.addItem(item("Open History Folder", #selector(openHistory)))
@@ -226,6 +233,44 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             }
         } catch {
             log.error("launch at login: \(error.localizedDescription, privacy: .public)")
+        }
+    }
+
+    @objc private func openSettings() {
+        if settings == nil {
+            let model = SettingsModel(
+                paths: paths,
+                historyDirectory: store.directory
+            )
+            model.current = { [weak self] in
+                guard let self else {
+                    return (Config(), [], 0)
+                }
+                return (self.config, self.problems, self.store.items.count)
+            }
+            model.onWrite = { [weak self] in
+                self?.loadSettings()
+            }
+            model.onWipe = { [weak self] in
+                self?.apply([.wipe])
+            }
+            settings = SettingsWindowController(model: model)
+        }
+        loadSettings()
+        settings?.show()
+    }
+
+    /// `:export [path]`: the config zip, dated on the Desktop by default.
+    private func export(to path: String) {
+        let destination = ConfigArchive.spaste.destination(for: path, folder: nil)
+        let paths = paths
+        Task { @MainActor in
+            do {
+                let names = try await ConfigArchive.spaste.export(from: paths, to: destination)
+                panel.say("exported \(names.count) files to \(destination.path.replacingOccurrences(of: NSHomeDirectory(), with: "~"))")
+            } catch {
+                panel.say("\(error)")
+            }
         }
     }
 

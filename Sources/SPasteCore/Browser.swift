@@ -20,6 +20,8 @@ public struct Browser: Sendable {
         case setPinned(ClipItem, Bool)
         case wipe
         case togglePause
+        case openSettings
+        case export(String)
     }
 
     /// Newest first, unfiltered.
@@ -128,6 +130,10 @@ public struct Browser: Sendable {
             return [.close]
         case .pause:
             return [.togglePause]
+        case .settings:
+            return [.close, .openSettings]
+        case .export(let path):
+            return [.export(path)]
         }
         return []
     }

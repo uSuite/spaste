@@ -29,6 +29,9 @@ public enum Command: Sendable, Hashable {
     case commandLine
     case close
     case pause
+    case settings
+    /// The config zip, at a path or (empty) dated on the Desktop.
+    case export(String)
 
     public enum ParseError: Error, Equatable, CustomStringConvertible {
         case empty
@@ -67,6 +70,7 @@ public enum Command: Sendable, Hashable {
         "command-line": .commandLine,
         "close": .close,
         "pause": .pause,
+        "settings": .settings,
     ]
 
     /// Short names the `:` line also takes.
@@ -76,7 +80,7 @@ public enum Command: Sendable, Hashable {
     ]
 
     /// Every command name, for help and completion.
-    public static let names: [String] = (Array(simple.keys) + ["type", "since", "until"]).sorted()
+    public static let names: [String] = (Array(simple.keys) + ["type", "since", "until", "export"]).sorted()
 
     /// `name [args]` as the keymap file writes it.
     public static func parse(_ text: String) throws(ParseError) -> Command {
@@ -108,6 +112,8 @@ public enum Command: Sendable, Hashable {
                 spec = parsed
             }
             return name == "since" ? .since(spec) : .until(spec)
+        case "export":
+            return .export(rest)
         default:
             throw .unknown(name)
         }

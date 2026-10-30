@@ -24,6 +24,8 @@ The panel opens in normal mode: keys are commands, as in vim. A number before a 
 - `:since 2h`, `:since today`, `:until yesterday`, `:since 2026-10-29`. Units are `m`, `h`, `d` and `w`. `:since` alone clears it.
 - `:clear` removes every filter.
 - `:pause` stops or resumes capture.
+- `:settings` opens the Settings window.
+- `:export` writes config and keymap to a dated zip on the Desktop; `:export ~/backup/spaste.zip` puts it where you say.
 - `:wipe!` deletes the whole history, pinned items included.
 - `:q` closes the panel.
 

@@ -10,3 +10,5 @@ Versions follow semver. Each release lists what a user notices; docs/DECISIONS.m
 - Enter copies the item back; `paste_on_enter yes` pastes it too once Accessibility is granted.
 - The history is a folder only you can read, one file per item; deleting and pruning remove the files. Concealed and transient items (password managers) are never stored.
 - Menu: pause capture, ignore the next copy, launch at login, open the config and history folders.
+- Settings… (menu or `:settings`): record the hotkey, paste on Enter with the Accessibility state, launch at login, history size and image limit, check interval, ignored apps and pasteboard types, the history folder with Wipe History, and Import Config, Export Config and Open Config Folder; each control writes one line of config and applies at once. Problems in the files are listed there too.
+- `:export [path]` writes config and keymap to a zip, dated on the Desktop by default; Import Config keeps the replaced files as `.bak`.

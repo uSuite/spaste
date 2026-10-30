@@ -81,7 +81,11 @@ keys :
 type wipe
 enter
 state
-keys q
+keys :
+type settings
+enter
+state
+window Settings 06-settings
 EOF
 
 cat > "$WORK/expected" <<'EOF'
@@ -101,6 +105,7 @@ normal | deploy script | 5/5 |  |
 normal | Invoice 7 | 5/5 |  |
 normal | deploy script | 4/4 |  |
 normal | deploy script | 4/4 |  | use :wipe! to delete the whole history, pinned items included
+normal | deploy script | 4/4 |  |
 EOF
 
 SPASTE_SMOKE="$WORK/steps" \

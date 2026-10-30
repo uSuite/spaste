@@ -37,6 +37,12 @@ struct CommandTests {
         }
     }
 
+    @Test func settingsAndExport() throws {
+        #expect(try Command.parse("settings") == .settings)
+        #expect(try Command.parse("export") == .export(""))
+        #expect(try Command.parseCommandLine("export ~/a b.zip") == .export("~/a b.zip"))
+    }
+
     @Test func commandLineAliases() throws {
         #expect(try Command.parseCommandLine("q") == .close)
         #expect(try Command.parseCommandLine("quit") == .close)

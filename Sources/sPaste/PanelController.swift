@@ -507,7 +507,8 @@ final class PanelController: NSObject, NSTableViewDataSource, NSTableViewDelegat
 
 /// `SPASTE_SMOKE=<script>`: drives the panel without a keyboard and records
 /// what it shows, for scripts/smoke.sh. One step per line: `open`,
-/// `keys <sequence>`, `type <text>`, `enter`, `esc`, `state`, `shot <name>`.
+/// `keys <sequence>`, `type <text>`, `enter`, `esc`, `state`, `shot <name>`,
+/// and `window <title> <name>` to render another window of the app.
 extension PanelController {
     func runSmoke(
         _ steps: [String],
@@ -538,7 +539,11 @@ extension PanelController {
         case "state":
             append(smokeState(), to: output.appendingPathComponent("state.txt"))
         case "shot":
-            shot(output.appendingPathComponent("\(rest).png"))
+            shot(panel.contentView, to: output.appendingPathComponent("\(rest).png"))
+        case "window":
+            let parts = rest.split(separator: " ", maxSplits: 1).map(String.init)
+            let window = NSApp.windows.first { $0.title.hasSuffix(parts.first ?? "") && $0.isVisible }
+            shot(window?.contentView, to: output.appendingPathComponent("\(parts.last ?? "window").png"))
         default:
             append("unknown step: \(step)", to: output.appendingPathComponent("state.txt"))
         }
@@ -561,8 +566,11 @@ extension PanelController {
         return "\(mode) | \(selected) | \(browser.visible.count)/\(browser.all.count) | \(browser.filter) | \(browser.message ?? "")"
     }
 
-    private func shot(_ url: URL) {
-        guard let view = panel.contentView, let rep = view.bitmapImageRepForCachingDisplay(in: view.bounds) else {
+    private func shot(
+        _ view: NSView?,
+        to url: URL
+    ) {
+        guard let view, let rep = view.bitmapImageRepForCachingDisplay(in: view.bounds) else {
             return
         }
         view.cacheDisplay(in: view.bounds, to: rep)

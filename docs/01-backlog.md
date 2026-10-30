@@ -30,6 +30,7 @@ sPaste ("super-fast paste") is a clipboard history in a panel on a hotkey, drive
 
 - SP-301 `~/.config/spaste/config` and `keymap`, written with comments on first run; problems shown in the status line.
 - SP-302 Launch at login from the menu.
+- SP-303 A Settings window over the config file, with Import and Export Config (scommon's `ConfigArchive`) and `:export`.
 
 ## E4 Later (P1 to P3)
 

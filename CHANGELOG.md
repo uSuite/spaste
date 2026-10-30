@@ -2,7 +2,7 @@
 
 Versions follow semver. Each release lists what a user notices; docs/DECISIONS.md has the reasoning.
 
-## Unreleased
+## 0.1.1 (2026-10-30)
 
 - The search and command line fills the width of the panel and scrolls a long query instead of wrapping it out of sight; it showed about four characters before.
 

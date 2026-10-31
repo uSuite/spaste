@@ -36,13 +36,20 @@ If you turn on paste on Enter, macOS asks to add sPaste under Privacy & Security
 tccutil reset Accessibility io.github.usuite.spaste
 ```
 
+## What it reads and writes
+
+sPaste reads the clipboard, which is its job. It has no network code: nothing is collected, sent or uploaded.
+
+- `~/.config/spaste/` (or `$XDG_CONFIG_HOME/spaste/`), created on first launch: `config` and `keymap`, plain `key value` text written with comments.
+- `~/Library/Application Support/sPaste/history/`, created on first launch, readable only by you (mode 700): one file per item and a text index. Pruning or deleting an item removes its file. Items marked concealed or transient by a password manager are never written, and `ignore_app` skips any app you name.
+- Export Config in Settings writes a zip of `config` and `keymap` where you choose in a Save panel; `:export` in the panel writes it to the path you give, or to the Desktop when you give none, and macOS may ask once for the Desktop. The history is never exported.
+- Accessibility, only if you turn on paste on Enter, to press Cmd+V for you.
+
+This release is not sandboxed yet, which is why macOS does not ask before sPaste writes these folders. The next minor version moves sPaste into the App Sandbox: its files will live in its container, with your current settings and history moved there on first launch.
+
 ## Use
 
 Shift+Cmd+C opens and closes the panel (`hotkey` in the config). Enter copies the selected item back to the clipboard and closes the panel; press Cmd+V where you want it. `paste_on_enter yes` pastes for you, which needs Accessibility access. The full key list is in `docs/keys.md`.
-
-Settings are in `~/.config/spaste/config` and keys in `~/.config/spaste/keymap`, both plain `key value` text written with comments on first run. The history lives in `~/Library/Application Support/sPaste/history/`, readable only by you.
-
-Passwords copied from a password manager are not stored: items marked concealed or transient on the pasteboard are skipped, and `ignore_app` skips any app you name.
 
 ## Build
 
